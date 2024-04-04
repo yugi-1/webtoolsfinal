@@ -15,6 +15,11 @@ export default {
 		typography,
 		skeleton({
 			themes: {
+				extend: {
+					width: {
+					  '128': '32rem',
+					}
+				  },
 				preset: [
 					{
 						name: 'seafoam',
