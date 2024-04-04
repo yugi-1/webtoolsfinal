@@ -10,26 +10,24 @@ function createEntryModeDiscard() {
 	return creatingEntry;
 }
 
-// ids should eventually just be the date they were created
-let userData = [
-	{
-	entries: [
+let entries = [
 		{
-			id: 1,
+			id: "oct 7",
 			entry: 'today sucked',
 			mood: '❌',
 			bookmarked: false,
 		},
 		{
-			id: 4,
+			id: 'aug 25',
 			entry: 'today was a really good day',
 			mood: '❌',
 			bookmarked: true,
 		}
-	],
-	moods: [
+	]
+
+const moods = [
 		{
-			id: 2,
+			id: 9,
 			mood: '❌ bad',
 			note: 'bad day'
 		},
@@ -38,8 +36,9 @@ let userData = [
 			mood: '❌ bad',
 			note: 'bad day'
 		}
-	],
-	exercises: [
+	]
+
+let exercises = [
 		{
 			id: 6,
 			mood: '❌ bad',
@@ -49,23 +48,20 @@ let userData = [
 			id: 7,
 			bookmarked: true
 		}
-	],
-	}
-]
+	]
 
 
-
+// let entriesArr = userData.map((item) => {
+// 		return item.entries;
+// })
+let newEntry ='';
+let newMood ='';
 
 function saveEntry() {
-	creatingEntry = false
-	let entries =[];
-	let moods = [];
-	let exercises =[];
-	let newEntry = '';
-
-	const id = Date();
-	userData = [...userData];
-	console.log(userData);
+	creatingEntry = false;
+	const id = (new Date()).toLocaleDateString('en-US');
+	entries = [...entries, {id: id, entry: newEntry, bookmarked: false}];
+	console.log(entries);
 }
 
 </script>
@@ -82,7 +78,7 @@ function saveEntry() {
 
 		<label class="label">
 
-			<textarea class=" textarea w-[46rem] p-50" rows="15" placeholder="What you did today" />	
+			<textarea  bind:value={newEntry} class=" textarea w-[46rem] p-50" rows="15" placeholder="What you did today" />	
 		</label>
 
 		<button type="button" class="btn btn-xl variant-ghost m-5 " on:click={createEntryModeDiscard}>Discard</button>
@@ -95,7 +91,10 @@ function saveEntry() {
 {:else}
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-10 text-center flex flex-col items-center">
-		<h2 class="h2">No entries yet. Create one!</h2>
+		{#if entries.length === 2}
+		<h2 class="h2">No entries created yet. Create one!</h2>
+		{/if}
+
 		<button on:click={createEntryMode} type="button" class="animate-bounce btn-icon btn-icon-xl variant-filled">
 			<span class="material-symbols-outlined">
 				add
@@ -103,6 +102,23 @@ function saveEntry() {
 		</button>
 	</div>
 </div>
+
+{#each entries as entry}
+<div class="flex justify-center">
+	<div class="card w-[46rem] m-5 ">
+		<dl class="list-dl">
+			<div>
+				<span class="badge bg-primary-500">{entry.mood}</span>
+				<span class="flex-auto">
+					<dt class="font-bold">{entry.id}</dt>
+					<dd>{entry.entry}</dd>
+				</span>
+			</div>
+		</dl>
+	</div>
+</div>
+{/each}
+
 {/if}
 
 <style lang="postcss">
