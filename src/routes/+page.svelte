@@ -53,13 +53,16 @@ let userData = [
 	}
 ]
 
-let entries =[];
-let moods = [];
-let exercises =[];
-let newEntry = '';
+
 
 
 function saveEntry() {
+	creatingEntry = false
+	let entries =[];
+	let moods = [];
+	let exercises =[];
+	let newEntry = '';
+
 	const id = Date();
 	userData = [...userData];
 	console.log(userData);
@@ -71,21 +74,19 @@ function saveEntry() {
 <div class="container h-full mx-auto flex justify-center items-center mb-50">
 	<div class="space-y-10 text-center flex flex-col items-center">
 	<form >
-		
-		<label class="label ">
-			<h3 class="flex justify-center items-center text-white pt-8">New Entry</h3>
-			<button type="button" class=" btn-icon btn-icon-xl variant-filled m-2">
-				<span class=" material-symbols-outlined">sentiment_satisfied</span>
-			</button>
-		
+		<h3 class="flex justify-center items-center text-white pt-8">New Entry</h3>
 
-			<input class="input w-[40rem] font-bold" type="text" placeholder="Title your entry..." />
-	
+		<button type="button" class=" btn-icon btn-icon-xl variant-filled m-2">
+			<span class=" material-symbols-outlined">sentiment_satisfied</span>
+		</button>
+
+		<label class="label">
+
 			<textarea class=" textarea w-[46rem] p-50" rows="15" placeholder="What you did today" />	
 		</label>
 
 		<button type="button" class="btn btn-xl variant-ghost m-5 " on:click={createEntryModeDiscard}>Discard</button>
-		<button type="button" class="btn btn-xl variant-filled">Save Entry</button>
+		<button type="button" class="btn btn-xl variant-filled" on:click={saveEntry}>Save Entry</button>
 	</form>
 	</div>
 </div>
