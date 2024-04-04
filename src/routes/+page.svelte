@@ -1,12 +1,21 @@
 <script>
 
+// for mood selection create radio buttons when user clicks 
+// mood tracker option with different material ui icons and values representing 
+// the emotion then apply that to data
+
+let newEntry ='';
+let newMood ='';
+
 let creatingEntry = false;
 function createEntryMode() {
 	creatingEntry = true;
+	newEntry =''
 		  return creatingEntry;
 }
 function createEntryModeDiscard() {
 	creatingEntry = false;
+	newEntry =''
 	return creatingEntry;
 }
 
@@ -14,13 +23,13 @@ let entries = [
 		{
 			id: "oct 7",
 			entry: 'today sucked',
-			mood: '❌',
+			mood: '<span class=" material-symbols-outlined">sentiment_satisfied</span>',
 			bookmarked: false,
 		},
 		{
 			id: 'aug 25',
 			entry: 'today was a really good day',
-			mood: '❌',
+			mood: '<span class="material-symbols-outlined">sentiment_very_dissatisfied</span>',
 			bookmarked: true,
 		}
 	]
@@ -54,17 +63,26 @@ let exercises = [
 // let entriesArr = userData.map((item) => {
 // 		return item.entries;
 // })
-let newEntry ='';
-let newMood ='';
+
 
 function saveEntry() {
 	creatingEntry = false;
-	const id = (new Date()).toLocaleDateString('en-US');
+
+	let currentdate = new Date(); 
+	let datetime = currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+	const id = datetime;
+	
 	entries = [...entries, {id: id, entry: newEntry, bookmarked: false}];
 	console.log(entries);
 }
 
 </script>
+
 
 {#if creatingEntry === true}
 <div class="container h-full mx-auto flex justify-center items-center mb-50">
@@ -89,11 +107,12 @@ function saveEntry() {
 
 
 {:else}
+{#if entries.length === 2}
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-10 text-center flex flex-col items-center">
-		{#if entries.length === 2}
+
 		<h2 class="h2">No entries created yet. Create one!</h2>
-		{/if}
+
 
 		<button on:click={createEntryMode} type="button" class="animate-bounce btn-icon btn-icon-xl variant-filled">
 			<span class="material-symbols-outlined">
@@ -102,13 +121,14 @@ function saveEntry() {
 		</button>
 	</div>
 </div>
+{/if}
 
 {#each entries as entry}
 <div class="flex justify-center">
 	<div class="card w-[46rem] m-5 ">
 		<dl class="list-dl">
 			<div>
-				<span class="badge bg-primary-500">{entry.mood}</span>
+				<span class="badge bg-primary-500">{@html entry.mood}</span>
 				<span class="flex-auto">
 					<dt class="font-bold">{entry.id}</dt>
 					<dd>{entry.entry}</dd>
@@ -119,7 +139,20 @@ function saveEntry() {
 </div>
 {/each}
 
+{#if entries.length !== 2 && creatingEntry === false}
+
+<div class="flex justify-center bottom-10 sticky">
+	<button on:click={createEntryMode} type="button" class=" p-50 btn-icon btn-icon-xl variant-filled">
+		<span class="material-symbols-outlined">
+			add
+			</span>
+	</button>
+	</div>
 {/if}
+
+{/if}
+
+
 
 <style lang="postcss">
 
