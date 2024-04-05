@@ -8,16 +8,23 @@ let newEntry ='';
 let newMood ='';
 
 let creatingEntry = false;
+let creatingEntryMood = false;
 function createEntryMode() {
 	creatingEntry = true;
 	newEntry =''
 		  return creatingEntry;
+}
+function createEntryMoodMode() {
+	creatingEntryMood = true;
+	newMood ='';
+	return creatingEntry;
 }
 function createEntryModeDiscard() {
 	creatingEntry = false;
 	newEntry =''
 	return creatingEntry;
 }
+
 
 let entries = [
 		{
@@ -63,7 +70,16 @@ let exercises = [
 // let entriesArr = userData.map((item) => {
 // 		return item.entries;
 // })
-
+const moodOptions = [
+		{  value: '<span class="material-symbols-outlined">sentiment_satisfied</span>' },
+		{  value: '<span class="material-symbols-outlined">mood</span>' },
+		{ value: '<span class="material-symbols-outlined">sentiment_dissatisfied</span>' },
+		{  value: '<span class="material-symbols-outlined">sentiment_very_satisfied</span>' },
+		{  value: '<span class="material-symbols-outlined">sentiment_neutral</span>' },
+		{ value: '<span class="material-symbols-outlined">mood_bad</span>' },
+		{ value: '<span class="material-symbols-outlined">sentiment_extremely_dissatisfied</span>' },
+		{ value: '<span class="material-symbols-outlined">sick</span>' }
+	];
 
 function saveEntry() {
 	creatingEntry = false;
@@ -77,7 +93,7 @@ function saveEntry() {
                 + currentdate.getSeconds();
 	const id = datetime;
 	
-	entries = [...entries, {id: id, entry: newEntry, bookmarked: false}];
+	entries = [...entries, {id: id, entry: newEntry, mood: newMood, bookmarked: false}];
 	console.log(entries);
 }
 
@@ -90,9 +106,20 @@ function saveEntry() {
 	<form >
 		<h3 class="flex justify-center items-center text-white pt-8">New Entry</h3>
 
-		<button type="button" class=" btn-icon btn-icon-xl variant-filled m-2">
+		<button on:click={createEntryMoodMode} type="button" class=" btn-icon btn-icon-xl variant-filled m-2">
 			<span class=" material-symbols-outlined">sentiment_satisfied</span>
 		</button>
+		
+		{#if creatingEntryMood === true}
+		<div class="text-center flex items-center">
+			{#each moodOptions as moodOption}
+		<label class="flex items-center p-5">
+		<input class="radio m-2" type="radio" bind:group={newMood} name="radio-direct" value={moodOption.value} /> {@html moodOption.value}
+		</label>
+{/each}
+
+			</div>
+		{/if}
 
 		<label class="label">
 
@@ -128,7 +155,7 @@ function saveEntry() {
 	<div class="card w-[46rem] m-5 ">
 		<dl class="list-dl">
 			<div>
-				<span class="badge bg-primary-500">{@html entry.mood}</span>
+				<span class="badge bg-surface-600">{@html entry.mood}</span>
 				<span class="flex-auto">
 					<dt class="font-bold">{entry.id}</dt>
 					<dd>{entry.entry}</dd>
