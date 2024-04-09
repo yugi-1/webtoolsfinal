@@ -1,4 +1,6 @@
 <script>
+import { fly, slide } from 'svelte/transition';
+
 
 // for mood selection create radio buttons when user clicks 
 // mood tracker option with different material ui icons and values representing 
@@ -116,11 +118,14 @@ function removeFromList(id) {
 		console.log(entries);
 }
 
+
+
+
 </script>
 
 
 {#if creatingEntry === true}
-<div class="container h-full mx-auto flex justify-center items-center mb-50">
+<div class="container h-full mx-auto flex justify-center items-center mb-50 " in:fly={{ y: 200 }} out:slide>
 	<div class="space-y-10 text-center flex flex-col items-center">
 	<form >
 		<h3 class="flex justify-center items-center text-white pt-8">New Entry</h3>
@@ -192,6 +197,13 @@ function removeFromList(id) {
 					<dd class="">{entry.entry}</dd>
 				</span>
 				<div>
+					<label class="flex items-center space-x-2">
+						<input bind:checked={entry.bookmarked} class="checkbox" type="checkbox" />
+						<span class="material-symbols-outlined">
+							bookmark
+							</span>
+					</label>
+
 				<button on:click={editMode(entry.id)} type="button" class="btn-icon variant-ghost-surface">
 					<span class="material-symbols-outlined">
 						edit
@@ -216,7 +228,7 @@ function removeFromList(id) {
 {#if entries.length !== 2 && creatingEntry === false}
 
 <div class="flex justify-center bottom-10 sticky">
-	<button on:click={createEntryMode} type="button" class=" p-50 btn-icon btn-icon-xl variant-filled">
+	<button on:click={createEntryMode} type="button" class="btn-icon btn-icon-xl variant-filled">
 		<span class="material-symbols-outlined">
 			add
 			</span>
@@ -227,7 +239,7 @@ function removeFromList(id) {
 {/if}
 
 <div class="flex justify-left bottom-10 sticky ml-5">
-<button type="button" class=" aboslute btn-icon btn-icon-xl variant-filled m-2">
+<button type="button" class="hover:animate-spin aboslute btn-icon btn-icon-xl variant-filled m-2">
 	<span class=" material-symbols-outlined">sentiment_satisfied</span>
 </button>
 </div>
