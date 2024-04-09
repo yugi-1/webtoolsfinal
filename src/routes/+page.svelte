@@ -1,4 +1,5 @@
 <script>
+	import { filter } from '@skeletonlabs/skeleton';
 import { fly, slide } from 'svelte/transition';
 
 
@@ -28,6 +29,7 @@ let creatingEntryMood = false;
 function createEntryMode() {
 	creatingEntry = true;
 	newEntry =''
+	console.log(entries)
 		  return creatingEntry;
 }
 function createEntryMoodMode() {
@@ -40,7 +42,11 @@ function createEntryModeDiscard() {
 	newEntry =''
 	return creatingEntry;
 }
-
+function filterBookmarked() {
+		entries = entries.filter(entry => entry.bookmarked !== true);
+		console.log(entries.length);
+		// tasksRemain = todoList.length;
+    }
 
 let entries = [
 		{
@@ -198,7 +204,7 @@ function removeFromList(id) {
 				</span>
 				<div>
 					<label class="flex items-center space-x-2">
-						<input bind:checked={entry.bookmarked} class="checkbox" type="checkbox" />
+						<input bind:checked={entry.bookmarked} on:click={() => entry.bookmarked = !entry.bookmarked} id="todo-{entry.id}" class="checkbox" type="checkbox" />
 						<span class="material-symbols-outlined">
 							bookmark
 							</span>
@@ -234,9 +240,17 @@ function removeFromList(id) {
 			</span>
 	</button>
 	</div>
+
+	<div class="flex justify-center mt-20">
+		<button on:click={filterBookmarked} type="button" class="btn variant-filled variant-filled">
+			View Bookmarked
+		</button>
+		</div>
+	
 {/if}
 
 {/if}
+
 
 <div class="flex justify-left bottom-10 sticky ml-5">
 <button type="button" class="hover:animate-spin aboslute btn-icon btn-icon-xl variant-filled m-2">
