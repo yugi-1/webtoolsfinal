@@ -5,10 +5,24 @@
 // the emotion then apply that to data
 
 let newEntry ='';
-let newMood ='';
+let newMood = '';
+
+let editing = null;
+
+function editMode(id) {
+      	editing = id;
+		  return editing;
+}
+function editEntry(item) {
+		if (item.entry === '') return
+      	editing = null;
+		console.log(entries);
+	}
+
 
 let creatingEntry = false;
 let creatingEntryMood = false;
+
 function createEntryMode() {
 	creatingEntry = true;
 	newEntry =''
@@ -16,7 +30,7 @@ function createEntryMode() {
 }
 function createEntryMoodMode() {
 	creatingEntryMood = true;
-	newMood ='';
+	newMood = '';
 	return creatingEntry;
 }
 function createEntryModeDiscard() {
@@ -96,6 +110,11 @@ function saveEntry() {
 	entries = [...entries, {id: id, entry: newEntry, mood: newMood, bookmarked: false}];
 	console.log(entries);
 }
+function removeFromList(id) {
+		entries.splice(id, 1)
+		entries = entries;
+		console.log(entries);
+}
 
 </script>
 
@@ -154,16 +173,44 @@ function saveEntry() {
 <div class="flex justify-center">
 	<div class="card w-[46rem] m-5 ">
 		<dl class="list-dl">
+			{#if editing === entry.id}
+				<div>
+				<textarea class="textarea m-5 w-[38rem]" bind:value={entry.entry} rows="15" placeholder="Edit..." />	
+					<button type="button" class="btn-icon variant-filled" on:click={editEntry}>
+						<span class=" material-symbols-outlined">
+							save
+						</span>
+					</button>
+				</div>
+			{:else}
 			<div>
+				{#if entry.mood !== ''}
 				<span class="badge bg-surface-600">{@html entry.mood}</span>
-				<span class="flex-auto">
+				{/if}
+				<span class="flex-auto pl-2">
 					<dt class="font-bold">{entry.id}</dt>
-					<dd>{entry.entry}</dd>
+					<dd class="">{entry.entry}</dd>
 				</span>
+				<div>
+				<button on:click={editMode(entry.id)} type="button" class="btn-icon variant-ghost-surface">
+					<span class="material-symbols-outlined">
+						edit
+					</span>
+				</button>
+
+				<button on:click={() => removeFromList(entry.id)} type="button" class="btn-icon variant-ghost-error">
+					<span class="material-symbols-outlined">
+					delete
+					</span>
+				</button>
 			</div>
+			</div>
+			{/if}
 		</dl>
+
 	</div>
 </div>
+
 {/each}
 
 {#if entries.length !== 2 && creatingEntry === false}
@@ -179,7 +226,11 @@ function saveEntry() {
 
 {/if}
 
-
+<div class="flex justify-left bottom-10 sticky ml-5">
+<button type="button" class=" aboslute btn-icon btn-icon-xl variant-filled m-2">
+	<span class=" material-symbols-outlined">sentiment_satisfied</span>
+</button>
+</div>
 
 <style lang="postcss">
 
