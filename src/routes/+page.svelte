@@ -43,7 +43,7 @@ function createEntryModeDiscard() {
 	return creatingEntry;
 }
 function filterBookmarked() {
-		entries = entries.filter(entry => entry.bookmarked !== true);
+		entries = entries.filter(entry => entry.bookmarked === true);
 		console.log(entries.length);
 		// tasksRemain = todoList.length;
     }
@@ -165,11 +165,13 @@ function removeFromList(id) {
 
 {:else}
 {#if entries.length === 2}
+
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-10 text-center flex flex-col items-center">
 
 		<h2 class="h2">No entries created yet. Create one!</h2>
 
+	
 
 		<button on:click={createEntryMode} type="button" class="animate-bounce btn-icon btn-icon-xl variant-filled">
 			<span class="material-symbols-outlined">
@@ -180,6 +182,11 @@ function removeFromList(id) {
 </div>
 {/if}
 
+<div class="flex justify-center mt-20">
+	<button on:click={filterBookmarked} type="button" class="btn variant-filled variant-filled">
+		View Bookmarked
+	</button>
+	</div>
 {#each entries as entry}
 <div class="flex justify-center">
 	<div class="card w-[46rem] m-5 ">
@@ -230,7 +237,7 @@ function removeFromList(id) {
 </div>
 
 {/each}
-
+<!-- eventually change to if length = 0 to show -->
 {#if entries.length !== 2 && creatingEntry === false}
 
 <div class="flex justify-center bottom-10 sticky">
@@ -241,12 +248,6 @@ function removeFromList(id) {
 	</button>
 	</div>
 
-	<div class="flex justify-center mt-20">
-		<button on:click={filterBookmarked} type="button" class="btn variant-filled variant-filled">
-			View Bookmarked
-		</button>
-		</div>
-	
 {/if}
 
 {/if}
