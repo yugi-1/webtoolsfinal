@@ -143,7 +143,7 @@ function saveMoodEntry() {
 	const id = datetime;
 	
 	moods = [...moods, {id: id, mood: newMoodOnly, note: newNote}];
-	console.log(entries);
+	console.log(moods);
 }
 
 
@@ -156,18 +156,19 @@ function removeFromList(id) {
 
 
 </script>
+
 <div>
 
-<div class="text-left p-5">
+<div class="text-left p-5 absolute">
 	<h2 >Moods</h2>
 {#each moods as mood}
 	{#if mood.mood !== ''}
-
 	<div>
-		<span class="badge bg-surface-600 mt-2">
+		<span class="badge bg-surface-600 mt-2 ">
 			{@html mood.mood}
-		
+		{#if mood.note}
 		<span>{mood.note}</span>
+		{/if}
 
 	</span>
 
@@ -190,7 +191,7 @@ function removeFromList(id) {
 		</div>
 
 		<div>
-		<input class="input w-96 m-4 text-center" maxlength="20" title="Input (text)" type="text" placeholder="Add Optional Note" />
+		<input class="input w-96 m-4 text-center" maxlength="20" title="Input (text)" type="text" placeholder="Add Optional Note" bind:value={newNote} />
 	</div>
 
 		<button type="button" class="btn-icon variant-filled" on:click={saveMoodEntry} >
@@ -236,12 +237,12 @@ function removeFromList(id) {
 
 
 {:else}
-{#if entries.length === 2 && creatingMoodEntry === false}
+{#if creatingMoodEntry === false && creatingEntry === false}
 
-<div class="container h-full mx-auto flex justify-center items-center">
+<div class="container h-full mx-auto flex justify-center items-center ">
 	<div class="space-y-10 text-center flex flex-col items-center">
 
-		<h2 class="h2">No entries created yet. Create one!</h2>
+		<h2 class="h2 mt-20">Add another entry!</h2>
 
 	
 
