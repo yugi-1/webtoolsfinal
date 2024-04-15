@@ -1,5 +1,6 @@
 <script>
 import { filter } from '@skeletonlabs/skeleton';
+	import { onMount } from 'svelte';
 import { fly, slide } from 'svelte/transition';
 
 // for mood selection create radio buttons when user clicks 
@@ -130,6 +131,19 @@ function saveEntry() {
 	console.log(entries);
 }
 
+
+// const freqTable = {};
+// moods.forEach((mood) => {
+//   freqTable[mood.mood] = freqTable[mood.mood] + 1 || 1;
+// });
+// const mode = Object.keys(freqTable).reduce((a, b) =>
+//   freqTable[a] > freqTable[b] ? a : b
+// );
+// console.log(mode);
+//what da hell is goin on
+
+$: overallMood = newMoodOnly;
+
 function saveMoodEntry() {
 	creatingMoodEntry = false;
 
@@ -160,12 +174,14 @@ function removeMoodFromList(id) {
 		console.log(moods);
 }
 
+
 </script>
 
 <div>
 
 <div class="text-left p-5 absolute">
 	<h2 >Moods</h2>
+	<h2 >Overall: {@html overallMood}%</h2>
 {#each moods as mood}
 	{#if mood.mood !== ''}
 	<div>
