@@ -143,6 +143,7 @@ function saveMoodEntry() {
 	const id = datetime;
 	
 	moods = [...moods, {id: id, mood: newMoodOnly, note: newNote}];
+	newNote ='';
 	console.log(moods);
 }
 
@@ -153,7 +154,11 @@ function removeFromList(id) {
 		console.log(entries);
 }
 
-
+function removeMoodFromList(id) {
+		moods.splice(id, 1)
+		moods = moods;
+		console.log(moods);
+}
 
 </script>
 
@@ -164,17 +169,24 @@ function removeFromList(id) {
 {#each moods as mood}
 	{#if mood.mood !== ''}
 	<div>
-		<span class="badge bg-surface-600 mt-2 ">
+		<span class="badge bg-secondary-600 mt-2 ">
 			{@html mood.mood}
 		{#if mood.note}
 		<span>{mood.note}</span>
 		{/if}
 
+		<button on:click={() => removeMoodFromList(mood.id)} type="button" class="btn-icon btn-icon-sm variant-ghost-error">
+			<span class="material-symbols-outlined ">
+			delete
+			</span>
+		</button>
 	</span>
 
 	</div>
 	<span class="text-[8px] ">{@html mood.id}</span>
+	
 	{/if}
+	
 {/each}
 </div>
 
@@ -191,7 +203,7 @@ function removeFromList(id) {
 		</div>
 
 		<div>
-		<input class="input w-96 m-4 text-center" maxlength="20" title="Input (text)" type="text" placeholder="Add Optional Note" bind:value={newNote} />
+		<input class="input w-96 m-4 text-center" maxlength="20" title="Input (text)" type="text" placeholder="Add Optional Note/Status" bind:value={newNote} />
 	</div>
 
 		<button type="button" class="btn-icon variant-filled" on:click={saveMoodEntry} >
