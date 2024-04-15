@@ -1,7 +1,6 @@
 <script>
-	import { filter } from '@skeletonlabs/skeleton';
+import { filter } from '@skeletonlabs/skeleton';
 import { fly, slide } from 'svelte/transition';
-
 
 // for mood selection create radio buttons when user clicks 
 // mood tracker option with different material ui icons and values representing 
@@ -9,8 +8,10 @@ import { fly, slide } from 'svelte/transition';
 
 let newEntry ='';
 let newMood = '';
-
+let newMoodOnly = ''
+let newNote = '';
 let editing = null;
+
 
 function editMode(id) {
       	editing = id;
@@ -22,6 +23,16 @@ function editEntry(item) {
 		console.log(entries);
 	}
 
+
+
+
+let creatingMoodEntry = false;
+function addMoodEntryMode() {
+	creatingMoodEntry = true;
+	newMoodOnly ='';
+	console.log(moods);
+	return creatingMoodEntry;
+}
 
 let creatingEntry = false;
 let creatingEntryMood = false;
@@ -63,15 +74,15 @@ let entries = [
 		}
 	]
 
-const moods = [
+let moods = [
 		{
-			id: 9,
-			mood: '❌ bad',
+			id: '9/4/2023 3:30PM',
+			mood: '<span class="material-symbols-outlined">mood</span',
 			note: 'bad day'
 		},
 		{
-			id: 3,
-			mood: '❌ bad',
+			id: '9/4/2023 12:00PM',
+			mood: '<span class="material-symbols-outlined">sick</span>',
 			note: 'bad day'
 		}
 	]
@@ -79,7 +90,7 @@ const moods = [
 let exercises = [
 		{
 			id: 6,
-			mood: '❌ bad',
+			mood: '<span class="material-symbols-outlined">mood</span',
 			note: 'bad day'
 		},
 		{
@@ -118,6 +129,24 @@ function saveEntry() {
 	entries = [...entries, {id: id, entry: newEntry, mood: newMood, bookmarked: false}];
 	console.log(entries);
 }
+
+function saveMoodEntry() {
+	creatingMoodEntry = false;
+
+	let currentdate = new Date(); 
+	let datetime = currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+	const id = datetime;
+	
+	moods = [...moods, {id: id, mood: newMoodOnly, note: newNote}];
+	console.log(entries);
+}
+
+
 function removeFromList(id) {
 		entries.splice(id, 1)
 		entries = entries;
@@ -125,12 +154,52 @@ function removeFromList(id) {
 }
 
 
+function addMoodEntry() {
+
+}
 
 
 </script>
+<div>
+<div class="text-left p-5">
+	<h2 >Moods</h2>
+{#each moods as mood}
+	{#if mood.mood !== ''}
+	<div>
+		
+		<span class="badge bg-surface-600 mt-2">
+			{@html mood.mood}
+			<span class="">{@html mood.id}</span>
+		<span>{mood.note}</span>
+	</span>
+
+	</div>
+	{/if}
+{/each}
+</div>
 
 
-{#if creatingEntry === true}
+{#if creatingMoodEntry === true}
+
+	<div class="text-center items-center mr-20 mt-20" in:fly={{ y: 200 }} out:slide>
+		<h2 class="h2">How do you feel?</h2>
+		<div class="flex justify-center">
+	{#each moodOptions as moodOption}
+		<label class="flex items-center p-5">
+			<input class="radio m-2" type="radio" bind:group={newMoodOnly} name="radio-direct" value={moodOption.value} /> {@html moodOption.value}
+		</label>
+	{/each}
+
+		</div>
+		<button type="button" class="btn-icon variant-filled" >
+			<span class=" material-symbols-outlined">
+				save
+			</span>
+		</button>
+	</div>
+{/if}
+
+{#if creatingEntry === true && creatingMoodEntry === false}
 <div class="container h-full mx-auto flex justify-center items-center mb-50 " in:fly={{ y: 200 }} out:slide>
 	<div class="space-y-10 text-center flex flex-col items-center">
 	<form >
@@ -164,7 +233,7 @@ function removeFromList(id) {
 
 
 {:else}
-{#if entries.length === 2}
+{#if entries.length === 2 && creatingMoodEntry === false}
 
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-10 text-center flex flex-col items-center">
@@ -182,8 +251,9 @@ function removeFromList(id) {
 </div>
 {/if}
 
+{#if creatingMoodEntry === false}
 <div class="flex justify-center mt-20">
-	<button on:click={filterBookmarked} type="button" class="btn variant-filled variant-filled">
+	<button on:click={filterBookmarked} type="button" class="btn variant-filled variant-filled m-10">
 		View Bookmarked
 	</button>
 	</div>
@@ -237,7 +307,8 @@ function removeFromList(id) {
 </div>
 
 {/each}
-<!-- eventually change to if length = 0 to show -->
+{/if}
+
 {#if entries.length !== 2 && creatingEntry === false}
 
 <div class="flex justify-center bottom-10 sticky">
@@ -249,14 +320,17 @@ function removeFromList(id) {
 	</div>
 
 {/if}
-
 {/if}
 
 
+{#if creatingMoodEntry === false}
+
 <div class="flex justify-left bottom-10 sticky ml-5">
-<button type="button" class="hover:animate-spin aboslute btn-icon btn-icon-xl variant-filled m-2">
+<button type="button" class="hover:animate-spin aboslute btn-icon btn-icon-xl variant-filled m-2" on:click={addMoodEntryMode}>
 	<span class=" material-symbols-outlined">sentiment_satisfied</span>
 </button>
+</div>
+{/if}
 </div>
 
 <style lang="postcss">
