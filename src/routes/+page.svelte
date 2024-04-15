@@ -78,7 +78,7 @@ let moods = [
 		{
 			id: '9/4/2023 3:30PM',
 			mood: '<span class="material-symbols-outlined">mood</span',
-			note: 'bad day'
+			note: 'today was great'
 		},
 		{
 			id: '9/4/2023 12:00PM',
@@ -154,34 +154,32 @@ function removeFromList(id) {
 }
 
 
-function addMoodEntry() {
-
-}
-
 
 </script>
 <div>
+
 <div class="text-left p-5">
 	<h2 >Moods</h2>
 {#each moods as mood}
 	{#if mood.mood !== ''}
+
 	<div>
-		
 		<span class="badge bg-surface-600 mt-2">
 			{@html mood.mood}
-			<span class="">{@html mood.id}</span>
+		
 		<span>{mood.note}</span>
+
 	</span>
 
 	</div>
+	<span class="text-[8px] ">{@html mood.id}</span>
 	{/if}
 {/each}
 </div>
 
 
 {#if creatingMoodEntry === true}
-
-	<div class="text-center items-center mr-20 mt-20" in:fly={{ y: 200 }} out:slide>
+	<div class="text-center items-center mr-20 mt-10" in:fly={{ y: 200 }} out:slide>
 		<h2 class="h2">How do you feel?</h2>
 		<div class="flex justify-center">
 	{#each moodOptions as moodOption}
@@ -189,9 +187,13 @@ function addMoodEntry() {
 			<input class="radio m-2" type="radio" bind:group={newMoodOnly} name="radio-direct" value={moodOption.value} /> {@html moodOption.value}
 		</label>
 	{/each}
-
 		</div>
-		<button type="button" class="btn-icon variant-filled" >
+
+		<div>
+		<input class="input w-96 m-4 text-center" maxlength="20" title="Input (text)" type="text" placeholder="Add Optional Note" />
+	</div>
+
+		<button type="button" class="btn-icon variant-filled" on:click={saveMoodEntry} >
 			<span class=" material-symbols-outlined">
 				save
 			</span>
@@ -215,6 +217,7 @@ function addMoodEntry() {
 		<label class="flex items-center p-5">
 		<input class="radio m-2" type="radio" bind:group={newMood} name="radio-direct" value={moodOption.value} /> {@html moodOption.value}
 		</label>
+
 {/each}
 
 			</div>
