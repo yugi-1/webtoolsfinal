@@ -1,4 +1,5 @@
 <script>
+import { fly, slide } from 'svelte/transition';
 
 let exercises = [
 		{
@@ -6,14 +7,16 @@ let exercises = [
 			title: '2 Minute Breathing Exercise',
 			length: '2 min',
             completed: false,
-            favorited: false
+            favorited: false,
+            instructions: "Find a quiet area and sit down criss cross. Optionally turn on some white noise. Close your eyes, and take 10 deep breaths. In between let go of all your worries, and repeat for 2 minutes"
 
 		},
 		{
 			id: 2,
 			title: '5 Minute Meditation',
 			length: '5 min',
-            favorited: true
+            favorited: true,
+            instructions: "Find a quiet area and sit down criss cross. Optionally turn on some white noise. Close your eyes, and take 10 deep breaths. In between let go of all your worries, and repeat for 5 minutes"
 
 		},
         {
@@ -21,7 +24,8 @@ let exercises = [
 			title: '10 Minute Meditation',
 			length: '10 min',
             completed: false,
-            favorited: false
+            favorited: false,
+            instructions: "Find a quiet area and sit down criss cross. Optionally turn on some white noise. Close your eyes, and take 10 deep breaths. In between let go of all your worries, and repeat for 10 minutes"
 
 		},
         {
@@ -29,14 +33,15 @@ let exercises = [
 			title: 'Full hour relaxation',
 			length: '1 hr',
             completed: false,
-            favorited: true
+            favorited: true,
+            instructions: "Find a quiet area and sit down criss cross. Optionally turn on some white noise. Close your eyes, and take 10 deep breaths. In between let go of all your worries, and repeat for 1 hour"
 
 		},
 	]
 
-let exerciseMode = null;
+let exerciseMode = false;
 function beginExercise() {
-
+    exerciseMode = true;
 }
 
 </script>
@@ -44,15 +49,17 @@ function beginExercise() {
 <div class="text-center">
 
 {#each exercises as exercise}
+{#if exerciseMode === false} 
+
 <div class="card variant-filled p-10 m-10">
     
     <h1>{exercise.title}</h1>
     <p>{exercise.length}</p>
 
     {#if exercise.completed === true}
-    <button type="button" class="btn variant-filled m-2">Begin Again</button>
+    <button type="button" class="btn variant-filled-surface m-2" on:click={beginExercise}>Begin Again</button>
     {:else}
-    <button type="button" class="btn variant-filled m-2">Begin</button>
+    <button type="button" class="btn variant-filled-surface m-2" on:click={beginExercise}>Begin</button>
     {/if}
 
     <div class="m-5 flex ">
@@ -66,5 +73,20 @@ function beginExercise() {
         </span>
     </button>
 </div>
+
+{/if}
+
+
 {/each}
+
+
+<!-- {#if exerciseMode === true} 
+
+    <div in:fly={{ y: 200 }} out:slide>
+        <p>starting exercise</p>
+        <p>{exercise.instructions}</p>
+    </div>
+
+{/if} -->
+
 </div>
