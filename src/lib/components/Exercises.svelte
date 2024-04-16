@@ -66,12 +66,20 @@ async function load() {
         })); 
   		})
 };
+function filterFavorites() {
+		exercises = exercises.filter(exercise => exercise.favorited === true);
+		console.log(exercises.length);
+    }
 
 </script>
 
 <div class="text-center">
 
 <button type="button" class="btn variant-filled m-2" on:click={load}>Get Inspirational Quote</button>
+
+<div>
+<button type="button" class="btn btn-sm variant-filled m-2" on:click={filterFavorites}>View Favorites</button>
+</div>
 
 {#each $theData as { quote } }
     <p class="p-5 h6" transition:fade={{ delay: 250, duration: 300 }}>{@html quote}</p>
