@@ -1,5 +1,6 @@
 <script>
 import { fly, slide } from 'svelte/transition';
+import { apiData, quotes, theData } from '../store';
 
 let exercises = [
 		{
@@ -50,11 +51,24 @@ function removeExercise(id) {
 		console.log(exercises);
 }
 
+async function load() {
+        
+  		await fetch(`https://api.api-ninjas.com/v1/quotes?category=inspirational`, {
+            headers: { 'X-Api-Key': 'k5SO+Z7sAVBmJagKDHQJsA==zNMpBYnWhuIgaZZd'},
+          })
+  		.then(response => response.json())
+  		.then(anydata => {
+		console.log(anydata);
+    	theData.set(anydata);
+            
+  		})
+};
+
 </script>
 
 <div class="text-center">
 
-<button type="button" class="btn variant-filled m-2">Get Inspirational Quote</button>
+<button type="button" class="btn variant-filled m-2" on:click={load}>Get Inspirational Quote</button>
 
 {#each exercises as exercise}
 {#if exerciseMode === false} 
