@@ -1,6 +1,7 @@
 <script>
 import { fly, slide } from 'svelte/transition';
 import { apiData, quotes, theData } from '../store';
+import { fade } from 'svelte/transition';
 
 let exercises = [
 		{
@@ -51,16 +52,18 @@ function removeExercise(id) {
 		console.log(exercises);
 }
 
-async function load() {
-        
+async function load() {     
   		await fetch(`https://api.api-ninjas.com/v1/quotes?category=inspirational`, {
             headers: { 'X-Api-Key': 'k5SO+Z7sAVBmJagKDHQJsA==zNMpBYnWhuIgaZZd'},
           })
   		.then(response => response.json())
   		.then(anydata => {
 		console.log(anydata);
-    	theData.set(anydata);
-            
+    	theData.set(anydata.map((q) => {
+            return {
+                quote: q.quote
+            }
+        })); 
   		})
 };
 
@@ -69,6 +72,10 @@ async function load() {
 <div class="text-center">
 
 <button type="button" class="btn variant-filled m-2" on:click={load}>Get Inspirational Quote</button>
+
+{#each $theData as { quote } }
+    <p class="p-5 h6" transition:fade={{ delay: 250, duration: 300 }}>{@html quote}</p>
+{/each}
 
 {#each exercises as exercise}
 {#if exerciseMode === false} 
