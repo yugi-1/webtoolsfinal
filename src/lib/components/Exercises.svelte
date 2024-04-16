@@ -44,7 +44,7 @@ function beginExercise() {
 <div class="text-center">
 
 {#each exercises as exercise}
-<div class="card p-10 m-10">
+<div class="card variant-filled p-10 m-10">
     
     <h1>{exercise.title}</h1>
     <p>{exercise.length}</p>
@@ -55,8 +55,8 @@ function beginExercise() {
     <button type="button" class="btn variant-filled m-2">Begin</button>
     {/if}
 
-    <div class="m-5">
-	    <input class="checkbox" type="checkbox" bind:checked={exercise.favorited} />
+    <div class="m-5 flex ">
+	    <input class="checkbox mr-2" type="checkbox" bind:checked={exercise.favorited} />
 	    <p>Favorite</p>
     </div>
 
