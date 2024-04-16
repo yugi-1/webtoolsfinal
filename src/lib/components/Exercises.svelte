@@ -44,6 +44,12 @@ function beginExercise() {
     exerciseMode = true;
 }
 
+function removeExercise(id) {
+		exercises.splice(id, 1)
+		exercises = exercises;
+		console.log(exercises);
+}
+
 </script>
 
 <div class="text-center">
@@ -67,7 +73,7 @@ function beginExercise() {
 	    <p>Favorite</p>
     </div>
 
-    <button type="button" class="btn-icon variant-ghost-error">
+    <button type="button" class="btn-icon variant-ghost-error" on:click={removeExercise}>
         <span class="material-symbols-outlined">
         delete
         </span>
