@@ -54,6 +54,8 @@ function removeExercise(id) {
 
 <div class="text-center">
 
+<button type="button" class="btn variant-filled m-2">Get Inspirational Quote</button>
+
 {#each exercises as exercise}
 {#if exerciseMode === false} 
 
