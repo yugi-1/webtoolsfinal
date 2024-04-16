@@ -88,17 +88,7 @@ let moods = [
 		}
 	]
 
-let exercises = [
-		{
-			id: 6,
-			mood: '<span class="material-symbols-outlined">mood</span',
-			note: 'bad day'
-		},
-		{
-			id: 7,
-			bookmarked: true
-		}
-	]
+
 
 
 // let entriesArr = userData.map((item) => {
@@ -140,7 +130,7 @@ function saveEntry() {
 //   freqTable[a] > freqTable[b] ? a : b
 // );
 // console.log(mode);
-//what da hell is goin on
+//what da hell is goin on here
 
 $: overallMood = newMoodOnly;
 
