@@ -132,7 +132,6 @@ function saveEntry() {
 // console.log(mode);
 //what da hell is goin on here
 
-$: overallMood = newMoodOnly;
 
 function saveMoodEntry() {
 	creatingMoodEntry = false;
@@ -171,7 +170,7 @@ function removeMoodFromList(id) {
 
 <div class="text-left p-5 absolute">
 	<h2 >Moods</h2>
-	<h2 >Overall: {@html overallMood}%</h2>
+
 {#each moods as mood}
 	{#if mood.mood !== ''}
 	<div>
