@@ -337,7 +337,9 @@ function removeMoodFromList(id) {
 			add
 			</span>
 	</button>
+	
 	</div>
+
 
 {/if}
 {/if}
