@@ -1,6 +1,6 @@
 <script>
 import { filter } from '@skeletonlabs/skeleton';
-	import { onMount } from 'svelte';
+import { onMount } from 'svelte';
 import { fly, slide } from 'svelte/transition';
 
 // for mood selection create radio buttons when user clicks 
@@ -15,16 +15,14 @@ let editing = null;
 
 
 function editMode(id) {
-      	editing = id;
-		  return editing;
+    editing = id;
+	return editing;
 }
 function editEntry(item) {
-		if (item.entry === '') return
-      	editing = null;
-		console.log(entries);
-	}
-
-
+	if (item.entry === '') return
+    editing = null;
+	console.log(entries);
+}
 
 
 let creatingMoodEntry = false;

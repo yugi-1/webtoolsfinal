@@ -3,11 +3,9 @@ import { fly, slide } from 'svelte/transition';
 import { apiData, quotes, theData } from '../store';
 import { fade } from 'svelte/transition';
 
-import { readable } from 'svelte/store'
-	import { tweened } from 'svelte/motion'
-	import { onMount } from 'svelte'
-
-
+import { readable } from 'svelte/store';
+import { tweened } from 'svelte/motion';
+import { onMount } from 'svelte';
 
     const mstime = readable(new Date().getTime(), set => {
 		let animationFrame
@@ -52,6 +50,7 @@ let exercises = [
 			title: '5 Minute Meditation',
 			length: '5 min',
             duration: 5,
+            completed: false,
             favorited: true,
             instructions: "Find a quiet area and sit down criss cross. Optionally turn on some white noise. Close your eyes, and take 10 deep breaths. In between let go of all your worries, and repeat for 5 minutes"
 
@@ -97,6 +96,7 @@ function beginExercise(duration) {
     exerciseMode = true;
     console.log(duration)
     timer = duration * 60;
+    console.log(exercises);
 }
 
 function removeExercise(id) {
@@ -150,7 +150,7 @@ function cancelExercise() {
     
     <h1>{exercise.title}</h1>
     <p>{exercise.length}</p>
-
+    <p>{exercise.instructions}</p>
 
     {#if exercise.completed === true}
         <button type="submit" class="btn variant-filled-surface m-2" on:click={beginExercise}>Begin Again</button>
@@ -186,7 +186,7 @@ function cancelExercise() {
 		/>
 	</svg>
 	<div class="timer-value">
-		<span>{minutes}mins</span>
+		<span>{minutes}m</span>
 		<small>{seconds}s</small>
 	</div>
 </section>
@@ -210,7 +210,7 @@ function cancelExercise() {
     line-height: 54px;
     font-size: 94px;
     bottom: 250px;
-    left: 140px;
+    left: 13%;
 
   }
   .timer-value small {
