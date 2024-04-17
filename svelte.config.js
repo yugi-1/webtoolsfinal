@@ -22,7 +22,7 @@ const config = {
 			strict: true
 		}),
 		paths: {
-			base: process.argv.includes('dev') ? '' : 'https://yugi-1.github.io/webtoolsfinal'
+			base: 'build/'
 		}
 	}
 };
