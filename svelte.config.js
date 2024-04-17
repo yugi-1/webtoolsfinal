@@ -13,7 +13,7 @@ const config = {
 	},
 	kit: {
 		adapter: adapter({
-			fallback: 'app.html'
+			fallback: 'index.html'
 		}),
 		paths: {
 			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
