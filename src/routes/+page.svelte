@@ -165,6 +165,7 @@ function removeMoodFromList(id) {
 </script>
 
 <div>
+{#if creatingMoodEntry === false && creatingEntry === false}
 
 <div class="text-left p-5 absolute">
 	<h2 >Moods</h2>
@@ -192,7 +193,7 @@ function removeMoodFromList(id) {
 	
 {/each}
 </div>
-
+{/if}
 
 {#if creatingMoodEntry === true}
 	<div class="text-center items-center mr-20 mt-10" in:fly={{ y: 200 }} out:slide>
@@ -328,7 +329,7 @@ function removeMoodFromList(id) {
 {/each}
 {/if}
 
-{#if entries.length !== 2 && creatingEntry === false}
+{#if entries.length !== 2 && creatingEntry === false && creatingMoodEntry === false}
 
 <div class="flex justify-center bottom-10 sticky">
 	<button on:click={createEntryMode} type="button" class="btn-icon btn-icon-xl variant-filled">
